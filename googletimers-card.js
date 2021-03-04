@@ -99,13 +99,13 @@ class GoogleTimersCard extends HTMLElement {
 
     if (timers.length > 1) {
       for (const timer of timers) {
-        if (timer['id'] === undefined) {
+        if (timer['time_left'] === undefined) {
           continue;
         }
 
-        var timer_name = timer['label'] ? "<ha-icon style='padding: 0 3px 0 0; --mdc-icon-size: 1em;' icon='mdi:label'></ha-icon>" + timer['label'] : "";
+        //var timer_name = timer['label'] ? "<ha-icon style='padding: 0 3px 0 0; --mdc-icon-size: 1em;' icon='mdi:label'></ha-icon>" + timer['label'] : "";
 
-        var remaining_time = new Date(timer['fire_time'] - Date.now());
+        var remaining_time = new Date(Date.parse(timer['local_time']) - Date.now());
         var hours = remaining_time.getHours() > 1 ? remaining_time.getHours() - 1 + " t. " : ""
         var minutes = remaining_time.getMinutes() < 10  && remaining_time.getHours() > 1 ? "0"+ remaining_time.getMinutes() : remaining_time.getMinutes();
         var seconds = remaining_time.getSeconds() < 10 ? "0"+ remaining_time.getSeconds() : remaining_time.getSeconds();
@@ -115,7 +115,7 @@ class GoogleTimersCard extends HTMLElement {
           html += `
           <div class="info" style="margin: -5px 0 -5px;">
             <div class="icon"><ha-icon style="padding: 0 5px 0 0; color: orange; --mdc-icon-size: 24px;" icon="mdi:bell-ring"></ha-icon></div>
-            <div class="timer">TIMER FÆRDIG!<span class="title">${timer_name}</span></div>
+            <div class="timer">TIMER FÆRDIG!</div>
           </div>
           `;
           continue;
@@ -124,7 +124,7 @@ class GoogleTimersCard extends HTMLElement {
         html += `
         <div class="info" style="margin: -5px 0 -5px;">
           <div class="icon"><ha-icon style="padding: 0 5px 0 0; --mdc-icon-size: 24px;" icon="mdi:alarm"></ha-icon></div>
-          <div class="timer">${time_to_show}<span class="title">${timer_name}</span><span class="duration"><ha-icon style="padding: 0 3px 0 0; --mdc-icon-size: 1em;" icon="mdi:timelapse"></ha-icon>${timer['duration']}</span></div>
+          <div class="timer">${time_to_show}<span class="duration"><ha-icon style="padding: 0 3px 0 0; --mdc-icon-size: 1em;" icon="mdi:timelapse"></ha-icon>${timer['time_left']}</span></div>
         </div>
         `;
       }
@@ -148,7 +148,7 @@ class GoogleTimersCard extends HTMLElement {
   }
 
   getCardSize() {
-    return 6
+    return 2
   }
 }
 customElements.define('googletimers-card', GoogleTimersCard);
