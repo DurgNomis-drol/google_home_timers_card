@@ -19,6 +19,8 @@ Link to [ha-google-home](https://github.com/leikoilja/ha-google-home)
 
 ### Usage
 
+The countdown is down client-side. This means that it will always fire at the correct time.
+
 ```yaml
 type: 'custom:googletimers-card'
 entity: sensor.kitchen_timers
