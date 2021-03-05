@@ -24,6 +24,7 @@ The countdown is done client-side. This means that it will always fire at the co
 ```yaml
 type: 'custom:googletimers-card'
 entity: sensor.kitchen_timers
+title: My own title
 ```
 
 ### Bugs/Features
