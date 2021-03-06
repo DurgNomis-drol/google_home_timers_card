@@ -97,25 +97,25 @@ class GoogleTimersCard extends HTMLElement {
     </div>
     `;
 
-    if (timers.length > 1) {
+    if (device['state'] == "on") {
       for (const timer of timers) {
-        if (timer['time_left'] === undefined) {
+        if (timer['duration'] === undefined) {
           continue;
         }
 
-        //var timer_name = timer['label'] ? "<ha-icon style='padding: 0 3px 0 0; --mdc-icon-size: 1em;' icon='mdi:label'></ha-icon>" + timer['label'] : "";
+        var timer_name = timer['label'] ? "<ha-icon style='padding: 0 3px 0 0; --mdc-icon-size: 1em;' icon='mdi:label'></ha-icon>" + timer['label'] : "";
 
         var remaining_time = new Date(Date.parse(timer['local_time']) - Date.now());
-        var hours = remaining_time.getHours() > 1 ? remaining_time.getHours() - 1 + " t. " : ""
+        var hours = remaining_time.getHours() > 1 ? remaining_time.getHours() - 1 + " h. " : ""
         var minutes = remaining_time.getMinutes() < 10  && remaining_time.getHours() > 1 ? "0"+ remaining_time.getMinutes() : remaining_time.getMinutes();
         var seconds = remaining_time.getSeconds() < 10 ? "0"+ remaining_time.getSeconds() : remaining_time.getSeconds();
-        var time_to_show = hours + minutes +" min. "+ seconds + " sek.";
+        var time_to_show = hours + minutes +" mins. "+ seconds + " secs.";
 
         if (Math.sign(remaining_time) == -1) {
           html += `
           <div class="info" style="margin: -5px 0 -5px;">
             <div class="icon"><ha-icon style="padding: 0 5px 0 0; color: orange; --mdc-icon-size: 24px;" icon="mdi:bell-ring"></ha-icon></div>
-            <div class="timer">TIMER FÆRDIG!</div>
+            <div class="timer">TIMER DONE!</div>
           </div>
           `;
           continue;
@@ -124,15 +124,16 @@ class GoogleTimersCard extends HTMLElement {
         html += `
         <div class="info" style="margin: -5px 0 -5px;">
           <div class="icon"><ha-icon style="padding: 0 5px 0 0; --mdc-icon-size: 24px;" icon="mdi:alarm"></ha-icon></div>
-          <div class="timer">${time_to_show}<span class="duration"><ha-icon style="padding: 0 3px 0 0; --mdc-icon-size: 1em;" icon="mdi:timelapse"></ha-icon>${timer['time_left']}</span></div>
+          <div class="timer">${time_to_show}<span class="duration"><ha-icon style="padding: 0 3px 0 0; --mdc-icon-size: 1em;" icon="mdi:timelapse"></ha-icon>${timer['duration']}</span></div>
         </div>
         `;
       }
 
     } else {
+      var is_off = "No timers set."
       html += `
       <div class="info">
-        <span class="value">${device['state']}</span>
+        <span class="value">${is_off}</span>
       </div>
       `;
     }
