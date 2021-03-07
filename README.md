@@ -14,10 +14,11 @@ Link to [ha-google-home](https://github.com/leikoilja/ha-google-home)
 
 ### Manual installation
 
-1. Download `googletimers-card.js` and place it in 'www' folder. If 'www' does not exists in your config folder, then just create it.
-2. Add it to lovelace by going to `lovelace Dashboards` and then `Resources`.
-3. and then input `/local/googletimers-card.js` and change resourcetype to `javascript-module`
-4. Restart Home Assistant or clear browser cache.
+1. Download [`googletimers-card.js`](https://raw.githubusercontent.com/DurgNomis-drol/ha-google-home-timers-card/main/googletimers-card.js) and right click and save it.
+2. Copy it into the 'www' folder. If 'www' does not exists in your config folder, then just create it.
+3. Add it to lovelace by going to `lovelace Dashboards` and then `Resources`.
+4. and then input `/local/googletimers-card.js` and change resourcetype to `javascript-module`
+5. Restart Home Assistant or clear browser cache.
 
 ### Usage
 
