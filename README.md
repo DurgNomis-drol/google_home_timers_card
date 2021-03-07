@@ -17,7 +17,7 @@ Link to [ha-google-home](https://github.com/leikoilja/ha-google-home)
 1. Download `googletimers-card.js` and place it in 'www' folder. If 'www' does not exists in your config folder, then just create it.
 2. Add it to lovelace by going to `lovelace Dashboards` and then `Resources`.
 3. and then input `/local/googletimers-card.js` and change resourcetype to `javascript-module`
-4. Restart ha or clear browser cache.
+4. Restart Home Assistant or clear browser cache.
 
 ### Usage
 
