@@ -1,6 +1,12 @@
 # Card for ha-google-home integration
 
 <b>[!] IS STILL IN ALPHA<b>
+  
+## Example
+
+<p align="center">
+  <img src="/images/example.png">
+</p>
 
 ## Installation
 
