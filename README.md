@@ -1,12 +1,8 @@
 # Card for ha-google-home integration
 
-<b>[!] IS STILL IN ALPHA<b>
-  
-## Example
+## Important to know!
 
-<p align="center">
-  <img src="/images/example.png">
-</p>
+It will not be a smooth countdown (It will jump some seconds), but it will always be done at the right time.
 
 ## Installation
 
@@ -32,6 +28,9 @@ type: 'custom:googletimers-card'
 entity: sensor.kitchen_timers
 title: My own title
 ```
+<p align="center">
+  <img src="/images/example.png">
+</p>
 
 ### Bugs/Features
 
