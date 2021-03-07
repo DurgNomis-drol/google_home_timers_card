@@ -115,7 +115,7 @@ class GoogleTimersCard extends HTMLElement {
           html += `
           <div class="info" style="margin: -5px 0 -5px;">
             <div class="icon"><ha-icon style="padding: 0 5px 0 0; color: orange; --mdc-icon-size: 24px;" icon="mdi:bell-ring"></ha-icon></div>
-            <div class="timer">TIMER DONE!</div>
+            <div class="timer">TIMER DONE!<span class="title">${timer_name}</span></div>
           </div>
           `;
           continue;
@@ -124,7 +124,7 @@ class GoogleTimersCard extends HTMLElement {
         html += `
         <div class="info" style="margin: -5px 0 -5px;">
           <div class="icon"><ha-icon style="padding: 0 5px 0 0; --mdc-icon-size: 24px;" icon="mdi:alarm"></ha-icon></div>
-          <div class="timer">${time_to_show}<span class="duration"><ha-icon style="padding: 0 3px 0 0; --mdc-icon-size: 1em;" icon="mdi:timelapse"></ha-icon>${timer['duration']}</span></div>
+          <div class="timer">${time_to_show}<span class="title">${timer_name}</span><span class="duration"><ha-icon style="padding: 0 3px 0 0; --mdc-icon-size: 1em;" icon="mdi:timelapse"></ha-icon>${timer['duration']}</span></div>
         </div>
         `;
       }
