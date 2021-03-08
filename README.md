@@ -8,9 +8,7 @@ It will not be a smooth countdown (It will jump some seconds), but it will alway
 
 ### Prerequisites
 
-Make sure you have installed ha-google-home. (Latest master)
-
-Link to [google_home](https://github.com/leikoilja/google_home)
+Make sure you have Home-assistant [Google Home](https://github.com/leikoilja/ha-google-home) component installed.
 
 ### Manual installation
 
