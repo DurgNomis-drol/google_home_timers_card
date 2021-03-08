@@ -1,4 +1,8 @@
-# Card for ha-google-home integration
+<p align="center">
+  <img src="https://brands.home-assistant.io/google_home/icon.png" height="150"></img>
+</p>
+
+# Card for Home Assistant Google Home integration
 
 ## Important to know!
 
@@ -8,7 +12,7 @@ It will not be a smooth countdown (It will jump some seconds), but it will alway
 
 ### Prerequisites
 
-Make sure you have Home-assistant [Google Home](https://github.com/leikoilja/ha-google-home) component installed.
+Make sure you have Home-Assistant [Google home](https://github.com/leikoilja/ha-google-home) integration installed.
 
 ### Manual installation
 
