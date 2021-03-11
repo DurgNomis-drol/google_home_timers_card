@@ -29,8 +29,10 @@ The countdown is done client-side. This means that it will always fire at the co
 ```yaml
 type: 'custom:googletimers-card'
 entity: sensor.kitchen_timers
-show_fire_time: false
-title: My own title
+title: My own title # Defaults to entity's name
+icon: mdi:flower # Defaults to entity's icon
+hide_header: false # Defaults to False
+show_fire_time: false # Defaults to False
 ```
 <p align="center">
   <img src="/images/example.png">
