@@ -33,6 +33,9 @@ class GoogleTimersCard extends HTMLElement {
           padding: 8px 16px 0;
           justify-content: space-between;
         }
+        .no-header {
+          padding: 16px 16px 0;
+        }
         .name {
           color: var(--secondary-text-color);
           line-height: 40px;
@@ -124,19 +127,27 @@ class GoogleTimersCard extends HTMLElement {
     const icon = this.config.icon || DEFAULT_ICON
     
     var timers = [];
+    var html = ``
 
     // Checks if the sensor does not return unkown
     if (state.state != STATE_UNKOWN) {
       timers = state.attributes[JSON_TIMERS];
     }
 
-    // Header with name and icon
-    var html = `
-    <div class="header">
-      <div class="name">${name}</div>
-      <div class="icon"><ha-icon style="--mdc-icon-size: 24px;" icon="${icon}"></ha-icon></div>
-    </div>
-    `;
+    if (!this.config.hide_header) {
+        // Header with name and icon
+        html = `
+        <div class="header">
+          <div class="name">${name}</div>
+          <div class="icon"><ha-icon style="--mdc-icon-size: 24px;" icon="${icon}"></ha-icon></div>
+        </div>
+        `;
+    }
+    else {
+        html = `
+        <div class="no-header"></div>
+        `;
+    }
 
     // Checks if there is a timer set, and the loops through the sensor. Or else it shows a message.
     if (state.state == STATE_ON) {
