@@ -94,7 +94,9 @@ class GoogleTimersCard extends HTMLElement {
     // JSON attributes
     const JSON_TIMERS = "timers"
     const JSON_DURATION = "duration";
-    const JSON_LOCAL_TIME = "local_time";
+    const JSON_LOCAL_TIME = "local_time"
+    const JSON_LOCAL_TIME_ISO = "local_time_iso";
+    const JSON_FIRE_TIME = "fire_time"
     const JSON_NAME = "label";
 
     // ICONS
@@ -116,9 +118,9 @@ class GoogleTimersCard extends HTMLElement {
 
     // Format the timestring to match 1 h. 11 mins. 11 secs. .
     function format_to_human_readable(rt) {
-        var h = rt.getHours() > 1 ? rt.getHours() - 1 + STRING_HOURS : ""
-        var m = rt.getMinutes() < 10  && rt.getHours() > 1 ? "0"+ rt.getMinutes() : rt.getMinutes();
-        var s = rt.getSeconds() < 10 ? "0"+ rt.getSeconds() : rt.getSeconds();
+        var h = rt.getUTCHours() > 0 ? rt.getUTCHours() + STRING_HOURS : ""
+        var m = rt.getUTCMinutes() < 10  && rt.getUTCHours() > 1 ? "0"+ rt.getUTCMinutes() : rt.getUTCMinutes();
+        var s = rt.getUTCSeconds() < 10 ? "0"+ rt.getUTCSeconds() : rt.getUTCSeconds();
         var ts = h + m + STRING_MINUTES + s + STRING_SECONDS;
         return ts;
     }
@@ -160,7 +162,7 @@ class GoogleTimersCard extends HTMLElement {
         var alarm_time = ""
         var timer_icon = ICON_ALARM
 
-        var remaining_time = get_timedelta(timer[JSON_LOCAL_TIME])
+        var remaining_time = get_timedelta(timer[JSON_LOCAL_TIME_ISO])
         var formatted_time = format_to_human_readable(remaining_time)
 
         if (Math.sign(remaining_time) == -1) {
