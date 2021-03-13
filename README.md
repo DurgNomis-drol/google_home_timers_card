@@ -1,7 +1,3 @@
-[![Contributors][contributors-shield]][contributors]
-[![GitHub Activity][commits-shield]][commits]
-[![License][license-shield]][license]
-    
 <p align="center">
   <img src="https://brands.home-assistant.io/google_home/icon.png" height="150"></img>
 </p>
