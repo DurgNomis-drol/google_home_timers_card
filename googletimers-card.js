@@ -2,7 +2,9 @@
 class GoogleTimersCard extends HTMLElement {
   set hass(hass) {
     const entityId = this.config.entity;
+    const alarms_entityId = this.config.alarms_entity;
     const state = hass.states[entityId];
+    const state_alarms = hass.states[alarms_entityId];
 
     if (state === undefined) {
       this.innerHTML = `
@@ -66,6 +68,11 @@ class GoogleTimersCard extends HTMLElement {
           font-size: 20px;
           margin: 8px 4px -5px;
         }
+        .alarm {
+          font-size: 20px;
+          margin: 8px 4px -5px;
+          text-transform: capitalize;
+        }
         .title {
           color: var(--secondary-text-color);
           font-size: 1.2em;
@@ -76,6 +83,11 @@ class GoogleTimersCard extends HTMLElement {
         .duration {
           font-size: 0.7em;
           padding: 0 5px 0 5px;
+        }
+        .next {
+          font-size: 0.7em;
+          padding: 0 5px 0 5px;
+          text-transform: lowercase;
         }
         `;
       card.appendChild(style);
@@ -93,6 +105,8 @@ class GoogleTimersCard extends HTMLElement {
 
     // JSON attributes
     const JSON_TIMERS = "timers"
+    const JSON_ALARMS = "alarms"
+    const JSON_RECURRENCE = "recurrence"
     const JSON_DURATION = "duration";
     const JSON_LOCAL_TIME = "local_time"
     const JSON_LOCAL_TIME_ISO = "local_time_iso";
@@ -101,15 +115,25 @@ class GoogleTimersCard extends HTMLElement {
 
     // ICONS
     const ICON_ALARM = "mdi:alarm";
+    const ICON_TIMER = "mdi:timer"
     const ICON_ALARM_DONE = "mdi:bell-ring";
     const ICON_DURATION = "mdi:timelapse";
     const ICON_ALARM_TIME = "mdi:clock";
     const ICON_LABEL = "mdi:label-variant"
+    const ICON_NEXT = "mdi:calendar-week"
 
     // TIME
     const STRING_HOURS = " h. "
     const STRING_MINUTES = " mins. "
     const STRING_SECONDS = " secs."
+    var WEEKDAYS = { 1 : "mon.",
+                 2 : "tue.",
+                 3 : "wed.",
+                 4 : "thu.",
+                 5 : "fri.",
+                 6 : "sat.",
+                 0 : "sun."
+               };
 
     // Get's timedelta between now and fire_time
     function get_timedelta(time) {
@@ -125,15 +149,25 @@ class GoogleTimersCard extends HTMLElement {
         return ts;
     }
 
+    function format_alarm_time(time, is_ampm) {
+        var d = new Date(Date.parse(time))
+        // var time = (d.toLocaleString(window.navigator.language, {weekday: 'long'})) + ': ' + d.getHours() + ':' + (d.getMinutes()<10?'0':'') + d.getMinutes()
+        var time = d.toLocaleString(window.navigator.language, {weekday: 'long', hour: '2-digit', minute: '2-digit', hour12: is_ampm })
+        return time
+    }
+
     const name = this.config.title || state.attributes['friendly_name'];
     const icon = this.config.icon || DEFAULT_ICON
     
     var timers = [];
+    var alarms = [];
     var html = ``
 
-    // Checks if the sensor does not return unkown
     if (state.state != STATE_UNKOWN) {
-      timers = state.attributes[JSON_TIMERS];
+        timers = state.attributes[JSON_TIMERS];
+        if (this.config.alarms_entity && state_alarms.state != STATE_UNKOWN) {
+            alarms = state_alarms.attributes[JSON_ALARMS];
+        }
     }
 
     if (!this.config.hide_header) {
@@ -152,7 +186,37 @@ class GoogleTimersCard extends HTMLElement {
     }
 
     // Checks if there is a timer set, and the loops through the sensor. Or else it shows a message.
-    if (state.state == STATE_ON) {
+    if (state.state == STATE_ON || state_alarms.state == STATE_ON) {
+
+      for (const alarm of alarms) {
+        var alarm_name = ""
+        var alarm_icon = ICON_ALARM
+
+        var formatted_time = format_alarm_time(alarm[JSON_LOCAL_TIME_ISO], this.config.use_12hour)
+        var recurrence = ""
+
+        if (alarm[JSON_RECURRENCE] != null) {
+            alarm[JSON_RECURRENCE].forEach(function(entry) {
+            recurrence += WEEKDAYS[entry] + " "
+        });
+        }
+
+        // If a label is set then it displays it else it shows nothing.
+        if (alarm[JSON_NAME]) {
+          alarm_name = "<div style='margin: 0 15px 0 15px;'><span class='title'><ha-icon style='padding: 0 3px 0 0; --mdc-icon-size: 1.1em;' icon='" + ICON_LABEL + "'></ha-icon>" + alarm[JSON_NAME] + "</span></div>"
+        }
+
+        html += `
+        <div>
+          ${alarm_name}
+          <div class="info" style="margin: -5px 0 -5px;">
+            <div class="icon"><ha-icon style="padding: 0 5px 0 0; --mdc-icon-size: 24px;" icon="${alarm_icon}"></ha-icon></div>
+            <div class="alarm">${formatted_time}<span class="next"><ha-icon style="padding: 0 3px 0 0; --mdc-icon-size: 1.1em;" icon="${ICON_NEXT}"></ha-icon>${recurrence}</div>
+          </div>
+        </div>
+        `;
+      }
+
       for (const timer of timers) {
         if (timer[JSON_DURATION] === undefined) {
           continue;
@@ -160,7 +224,7 @@ class GoogleTimersCard extends HTMLElement {
 
         var timer_name = ""
         var alarm_time = ""
-        var timer_icon = ICON_ALARM
+        var timer_icon = ICON_TIMER
 
         var remaining_time = get_timedelta(timer[JSON_LOCAL_TIME_ISO])
         var formatted_time = format_to_human_readable(remaining_time)
