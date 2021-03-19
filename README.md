@@ -24,6 +24,8 @@ Make sure you have Home-Assistant [Google home](https://github.com/leikoilja/ha-
 
 ### YAML installation - Not recommended
 
+Follow step 1 -> 2 above and then add this to your `ui-lovelace.yaml` file.
+
 ```yaml
 lovelace:
   resources:
