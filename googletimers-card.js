@@ -86,8 +86,11 @@ class GoogleTimersCard extends HTMLElement {
         }
         .next {
           font-size: 0.7em;
-          padding: 0 5px 0 5px;
+          padding: 0 5px 15px 5px;
           text-transform: lowercase;
+          overflow: hidden;
+          white-space: wrap;
+          text-overflow: ellipsis;
         }
         `;
       card.appendChild(style);
@@ -100,7 +103,7 @@ class GoogleTimersCard extends HTMLElement {
     const DEFAULT_ICON = "mdi:timer-sand"
 
     // STRINGS
-    const NO_TIMERS = "No timers set.";
+    const NO_TIMERS = "None set";
     const TIMER_IS_DONE = "TIMER DONE!";
 
     // JSON attributes
@@ -195,10 +198,12 @@ class GoogleTimersCard extends HTMLElement {
         var formatted_time = format_alarm_time(alarm[JSON_LOCAL_TIME_ISO], this.config.use_12hour)
         var recurrence = ""
 
-        if (alarm[JSON_RECURRENCE] != null) {
+        if (alarm[JSON_RECURRENCE] != null && alarm[JSON_RECURRENCE].length >= 7) {
+            recurrence = "all weekdays"
+        } else if (alarm[JSON_RECURRENCE] != null) {
             alarm[JSON_RECURRENCE].forEach(function(entry) {
-            recurrence += WEEKDAYS[entry] + " "
-        });
+                recurrence += WEEKDAYS[entry] + " "
+            });
         }
 
         // If a label is set then it displays it else it shows nothing.
