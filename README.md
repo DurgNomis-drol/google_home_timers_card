@@ -22,6 +22,15 @@ Make sure you have Home-Assistant [Google home](https://github.com/leikoilja/ha-
 4. and then input `/local/googletimers-card.js` and change resourcetype to `javascript-module`
 5. Restart Home Assistant or clear browser cache.
 
+### YAML installation - Not recommended
+
+```yaml
+lovelace:
+  resources:
+    - url: /local/googletimers-card.js
+      type: module
+```
+
 ### Usage
 
 The countdown is done client-side. This means that it will always fire at the correct time.
