@@ -98,8 +98,8 @@ class GoogleTimersCard extends HTMLElement {
       this.appendChild(card);
     }
 
-    const STATE_ON = "on";
-    const STATE_UNKOWN = "unknown"
+    const STATE_UNKNOWN = "unknown"
+    const STATE_UNAVAILABLE = "unavailable"
     const DEFAULT_ICON = "mdi:timer-sand"
 
     // STRINGS
@@ -139,8 +139,8 @@ class GoogleTimersCard extends HTMLElement {
                };
 
     // Get's timedelta between now and fire_time
-    function get_timedelta(time) {
-        return new Date(Date.parse(time) - Date.now());
+    function get_timedelta(ts) {
+        return new Date((ts * 1000) - Date.now());
     }
 
     // Format the timestring to match 1 h. 11 mins. 11 secs. .
@@ -152,8 +152,8 @@ class GoogleTimersCard extends HTMLElement {
         return ts;
     }
 
-    function format_alarm_time(time, is_ampm) {
-        var d = new Date(Date.parse(time))
+    function format_alarm_time(ts, is_ampm) {
+        var d = new Date(ts * 1000)
         // var time = (d.toLocaleString(window.navigator.language, {weekday: 'long'})) + ': ' + d.getHours() + ':' + (d.getMinutes()<10?'0':'') + d.getMinutes()
         var time = d.toLocaleString(window.navigator.language, {weekday: 'long', hour: '2-digit', minute: '2-digit', hour12: is_ampm })
         return time
@@ -166,9 +166,9 @@ class GoogleTimersCard extends HTMLElement {
     var alarms = [];
     var html = ``
 
-    if (state.state != STATE_UNKOWN) {
+    if (state.state != STATE_UNKNOWN) {
         timers = state.attributes[JSON_TIMERS];
-        if (this.config.alarms_entity && state_alarms.state != STATE_UNKOWN) {
+        if (this.config.alarms_entity && state_alarms.state != STATE_UNKNOWN) {
             alarms = state_alarms.attributes[JSON_ALARMS];
         }
     }
@@ -189,13 +189,13 @@ class GoogleTimersCard extends HTMLElement {
     }
 
     // Checks if there is a timer set, and the loops through the sensor. Or else it shows a message.
-    if (state.state == STATE_ON || state_alarms.state == STATE_ON) {
+    if (state.state != STATE_UNAVAILABLE || state_alarms.state != STATE_UNAVAILABLE) {
 
       for (const alarm of alarms) {
         var alarm_name = ""
         var alarm_icon = ICON_ALARM
 
-        var formatted_time = format_alarm_time(alarm[JSON_LOCAL_TIME_ISO], this.config.use_12hour)
+        var formatted_time = format_alarm_time(alarm[JSON_FIRE_TIME], this.config.use_12hour)
         var recurrence = ""
 
         if (alarm[JSON_RECURRENCE] != null && alarm[JSON_RECURRENCE].length >= 7) {
@@ -231,7 +231,7 @@ class GoogleTimersCard extends HTMLElement {
         var alarm_time = ""
         var timer_icon = ICON_TIMER
 
-        var remaining_time = get_timedelta(timer[JSON_LOCAL_TIME_ISO])
+        var remaining_time = get_timedelta(timer[JSON_FIRE_TIME])
         var formatted_time = format_to_human_readable(remaining_time)
 
         if (Math.sign(remaining_time) == -1) {
