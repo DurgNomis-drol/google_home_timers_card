@@ -14,6 +14,13 @@ It will not be a smooth countdown (It will jump some seconds), but it will alway
 
 Make sure you have Home-Assistant [Google home](https://github.com/leikoilja/ha-google-home) integration installed.
 
+
+### HACS
+
+Since the integration is under active development, it is not yet added to HACS default repository, only manual installation is available for early testers
+
+To install the integration follow HACS description to add custom repository. Provide `https://github.com/DurgNomis-drol/google_home_timers_card` as repository URL and select the "Lovelace" category. We recommend you select the latest stable release.
+
 ### Manual installation
 
 1. Download [`googletimers-card.js`](https://raw.githubusercontent.com/DurgNomis-drol/google_home_timers_card/main/googletimers-card.js) and right click and save it.
