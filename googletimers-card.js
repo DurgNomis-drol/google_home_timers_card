@@ -194,16 +194,20 @@ class GoogleTimersCard extends HTMLElement {
       for (const alarm of alarms) {
         var alarm_name = ""
         var alarm_icon = ICON_ALARM
+        var alarm_next_icon = '<ha-icon style="padding: 0 3px 0 0; --mdc-icon-size: 1.1em;" icon="'+ ICON_NEXT +'"></ha-icon>'
+        var alarm_next = ""
 
         var formatted_time = format_alarm_time(alarm[JSON_FIRE_TIME], this.config.use_12hour)
         var recurrence = ""
 
         if (alarm[JSON_RECURRENCE] != null && alarm[JSON_RECURRENCE].length >= 7) {
             recurrence = "all weekdays"
+            alarm_next = alarm_next_icon
         } else if (alarm[JSON_RECURRENCE] != null) {
             alarm[JSON_RECURRENCE].forEach(function(entry) {
                 recurrence += WEEKDAYS[entry] + " "
             });
+            alarm_next = alarm_next_icon
         }
 
         // If a label is set then it displays it else it shows nothing.
@@ -216,7 +220,7 @@ class GoogleTimersCard extends HTMLElement {
           ${alarm_name}
           <div class="info" style="margin: -5px 0 -5px;">
             <div class="icon"><ha-icon style="padding: 0 5px 0 0; --mdc-icon-size: 24px;" icon="${alarm_icon}"></ha-icon></div>
-            <div class="alarm">${formatted_time}<span class="next"><ha-icon style="padding: 0 3px 0 0; --mdc-icon-size: 1.1em;" icon="${ICON_NEXT}"></ha-icon>${recurrence}</div>
+            <div class="alarm">${formatted_time}<span class="next">${alarm_next}${recurrence}</span></div>
           </div>
         </div>
         `;

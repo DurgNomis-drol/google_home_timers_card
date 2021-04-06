@@ -19,7 +19,7 @@ Make sure you have Home-Assistant [Google home](https://github.com/leikoilja/ha-
 
 Since the integration is under active development, it is not yet added to HACS default repository, only manual installation is available for early testers
 
-To install the integration follow HACS description to add custom repository. Provide https://github.com/DurgNomis-drol/google_home_timers_card as repository URL and select "Plugins" category. We recommend you select the latest stable release.
+To install the integration follow HACS description to add custom repository. Provide `https://github.com/DurgNomis-drol/google_home_timers_card` as repository URL and select the "Lovelace" category. We recommend you select the latest stable release.
 
 ### Manual installation
 
