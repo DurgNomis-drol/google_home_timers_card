@@ -1,6 +1,5 @@
 {
-  "name": "Google Home timers card",
-  "content_in_root": true,
-  "filename": "googletimers-card.js",
-  "render_readme": true
+    "name": "Google Home card",
+    "render_readme": true,
+    "filename": "googlehome-card.js"
 }
