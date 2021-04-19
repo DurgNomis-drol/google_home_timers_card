@@ -287,3 +287,11 @@ class GoogleTimersCard extends HTMLElement {
   }
 }
 customElements.define('googletimers-card', GoogleTimersCard);
+
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: 'googletimers-card',
+  name: 'Google Timers Card',
+  preview: false,
+  description: 'The Google Home timers card shows timers and alarms set in Google Home.'
+});
