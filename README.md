@@ -64,6 +64,25 @@ entity: sensor.kitchen_timers
 alarms_entity: sensor.kitchen_alarms
 title: Kitchen
 ```
+
+Ecample using auto-entities to hide card and only display active timers:
+
+```yaml
+type: 'custom:auto-entities'
+card:
+  type: vertical-stack
+card_param: cards
+filter:
+  exclude:
+    - state: unavailable
+  include:
+    - domain: sensor
+      entity_id: sensor.*_home_timers
+      options:
+        type: 'custom:googletimers-card'
+```
+
+
 <p align="center">
   <img src="/images/example.png">
 </p>
