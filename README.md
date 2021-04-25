@@ -65,7 +65,14 @@ alarms_entity: sensor.kitchen_alarms
 title: Kitchen
 ```
 
-Example using auto-entities to hide card and only display active timers:
+<p align="center">
+  <img src="/images/example.png">
+</p>
+
+### Example using Auto-entities
+
+Hiding the card using `auto-entities` card like this:
+IMPORTANT: Requires the `auto-entities` custom card installed.
 
 ```yaml
 type: 'custom:auto-entities'
@@ -81,11 +88,6 @@ filter:
       options:
         type: 'custom:googletimers-card'
 ```
-
-
-<p align="center">
-  <img src="/images/example.png">
-</p>
 
 ### Bugs/Features
 
