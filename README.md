@@ -65,7 +65,7 @@ alarms_entity: sensor.kitchen_alarms
 title: Kitchen
 ```
 
-Ecample using auto-entities to hide card and only display active timers:
+Example using auto-entities to hide card and only display active timers:
 
 ```yaml
 type: 'custom:auto-entities'
