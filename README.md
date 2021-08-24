@@ -1,3 +1,10 @@
+# DEPRECATED
+
+### As the main integration does not work for me anymore, i won't be updating this. Feel free to fork, copy or ask to be a collaborator here if you want to maintain this.
+
+---
+## Original Readme
+
 <p align="center">
   <img src="https://brands.home-assistant.io/google_home/icon.png" height="150"></img>
 </p>
