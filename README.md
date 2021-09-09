@@ -71,9 +71,30 @@ entity: sensor.kitchen_timers
 alarms_entity: sensor.kitchen_alarms
 title: Kitchen
 ```
+
 <p align="center">
   <img src="/images/example.png">
 </p>
+
+### Example using Auto-entities
+
+Hiding the card using `auto-entities` card like this:
+IMPORTANT: Requires the `auto-entities` custom card installed.
+
+```yaml
+type: 'custom:auto-entities'
+card:
+  type: vertical-stack
+card_param: cards
+filter:
+  exclude:
+    - state: unavailable
+  include:
+    - domain: sensor
+      entity_id: sensor.*_home_timers
+      options:
+        type: 'custom:googletimers-card'
+```
 
 ### Bugs/Features
 
